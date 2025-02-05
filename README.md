@@ -97,7 +97,7 @@ Big_Attack <br>
 
 ### Big Attack
 
-![big](https://github.com/user-attachments/assets/2aefe3cb-f8b0-488b-aa44-19c9e145fbfe)
+![1](https://github.com/user-attachments/assets/9669f5f8-f992-4f0a-81e5-f1d4ec3a2fda)
 
 큰 공격은, 긴 딜레이 시간을 가지나, <br>
 딜레이 기간동안 유저를 타게팅하면서 회전하며, <br>
