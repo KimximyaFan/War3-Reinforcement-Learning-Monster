@@ -234,9 +234,11 @@ state는 42개의 정수 값 0~41을 이용하였고 <br>
 
 ![image](https://github.com/user-attachments/assets/c253ba09-6700-42a1-8206-8faf176436b0)
 
+action은 10개의 정수 값 0~9를 이용하였습니다.<br>
+
 ![image](https://github.com/user-attachments/assets/658c3e38-16e8-400a-948b-85849cce4ace)
 
-action은 10개의 정수 값 0~9를 이용하였습니다.<br>
+상태 42개, action 10개 <br>
 
 ![image](https://github.com/user-attachments/assets/8273889c-4853-4cfa-95fb-7f170b702cf3)
 
