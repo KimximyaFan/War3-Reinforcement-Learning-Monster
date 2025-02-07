@@ -230,7 +230,12 @@ Key 값으로 state와 action이 존재합니다.<br>
 
 ![image](https://github.com/user-attachments/assets/eb384b2b-42d2-4670-896e-41b76727f9ed)
 
-state는 42개의 정수 값 0~41을 이용하였고 <br>
+거리 상태는 0~9 까지 존재하고, 타격 상태에 기반해서 padding 의 값이 바뀝니다. <br>
+
+final state 40, 41 을 더하면, <br>
+
+최종적으로 state는 42개의 정수 값 0~41을 이용하게 됩니다 <br>
+
 
 ![image](https://github.com/user-attachments/assets/c253ba09-6700-42a1-8206-8faf176436b0)
 
