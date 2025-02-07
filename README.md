@@ -160,10 +160,10 @@ MONSTER_ATTACKED <br>
 
 위 그림과 같이 타격 상태를 판별해서, 정수를 더해줍니다. <br>
 
-정수 0~9 인 경우, 유저와 몬스터 둘다 타격받지 않음 상태이고, <br>
-10~19는 몬스터만 타격받은 상태, <br>
-20~29는 유저만 타격받은 상태, <br>
-30~39는 유저와 몬스터 둘다 타격 받은 상태를 나타냅니다. <br>
+정수 0 \~ 9 인 경우, 유저와 몬스터 둘다 타격받지 않음 상태이고, <br>
+10 \~ 19는 몬스터만 타격받은 상태, <br>
+20 \~ 29는 유저만 타격받은 상태, <br>
+30 \~ 39는 유저와 몬스터 둘다 타격 받은 상태를 나타냅니다. <br>
 
 정수 0~41 의 숫자로 상태를 모두 표현할 수 있게 되며, <br>
 액션은 10개 존재하므로, state-action pair의 갯수는 4*10 = 400개에 <br>
@@ -182,17 +182,17 @@ final state인 MONSTER_WIN이랑  USER_WIN 상태를 더해서 <br>
 
 ![image](https://github.com/user-attachments/assets/32e33ace-d630-45b8-9c3b-0c246906cf5d)
 
-불특정한 실제 사람을 상대로 몬스터가 학습을 해야합니다. 
-사람이 어떻게 행동할지는 알 수 없으므로, Model Free Learning 강화학습 알고리즘을 채택해야 합니다. 
-위와 같은 상황에서 채택할 알고리즘은 대표적으로 
+불특정한 실제 사람을 상대로 몬스터가 학습을 해야합니다. <br>
+사람이 어떻게 행동할지는 알 수 없으므로, Model Free Learning 강화학습 알고리즘을 채택해야 합니다. <br>
+위와 같은 상황에서 채택할 알고리즘은 대표적으로 <br>
 
-MC(Monte Carlo) 
-TD(Temporal Difference)
+MC(Monte Carlo) <br>
+TD(Temporal Difference) <br>
 
-방식을 생각할 수 있습니다. 
+방식을 생각할 수 있습니다. <br>
 
-몬테카를로 같은 경우, 문제가 episodic 해야만 채택할 수 있는데, 현 문제도 episodic 하므로 MC 알고리즘을 채택 할 수 있습니다. 
-그러나 에피소드가 종료되고나서 final state부터 initial state까지 일련의 리턴값을 계산해나가야 하므로, 에피소드의 길이가 길면 computation 압박이 세집니다. 
-현 문제는 전투가 빠르게 끝날 수도 혹은 오래 걸릴 수도 있습니다. 
-그래서 구현도 용이하고 computation 압력도 낮은 TD의 on policy 알고리즘인 SARSA를 채택하게 되었습니다. 
+몬테카를로 같은 경우, 문제가 episodic 해야만 채택할 수 있는데, 현 문제도 episodic 하므로 MC 알고리즘을 채택 할 수 있습니다. <br>
+그러나 에피소드가 종료되고나서 final state부터 initial state까지 일련의 리턴값을 계산해나가야 하므로, 에피소드의 길이가 길면 computation 압박이 세집니다. <br>
+현 문제는 전투가 빠르게 끝날 수도 혹은 오래 걸릴 수도 있습니다. <br>
+그래서 구현도 용이하고 computation 압력도 낮은 TD의 on policy 알고리즘인 SARSA를 채택하게 되었습니다. <br>
 
