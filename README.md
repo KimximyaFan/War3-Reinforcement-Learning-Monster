@@ -223,25 +223,40 @@ TD(Temporal Difference) <br>
 
 ![image](https://github.com/user-attachments/assets/32a827e9-789e-4c04-b73a-2d10c4ed2e00)
 
-해쉬테이블을 사용해서 Q_Table을 만들었습니다. 
-Key 값으로 state와 action이 존재합니다.
+해쉬테이블을 사용해서 Q_Table을 만들었습니다. <br>
+Key 값으로 state와 action이 존재합니다.<br>
+
+![image](https://github.com/user-attachments/assets/5d6ffc9f-614a-47f3-adaa-856b8b85a83c)
 
 ![image](https://github.com/user-attachments/assets/eb384b2b-42d2-4670-896e-41b76727f9ed)
 
-state는 42개의 정수 값 0~41을 이용하였고
+state는 42개의 정수 값 0~41을 이용하였고 <br>
 
 ![image](https://github.com/user-attachments/assets/c253ba09-6700-42a1-8206-8faf176436b0)
 
-action은 10개의 정수 값 0~9를 이용하였습니다.
+![image](https://github.com/user-attachments/assets/658c3e38-16e8-400a-948b-85849cce4ace)
+
+action은 10개의 정수 값 0~9를 이용하였습니다.<br>
+
+![image](https://github.com/user-attachments/assets/8273889c-4853-4cfa-95fb-7f170b702cf3)
+
+Get_State() 라는 함수는, 거리값을 인자로 받고 <br>
+타격상태와 거리상태에 기반해서 state를 리턴해줍니다<br>
 
 <br><br><br>
 
 ![image](https://github.com/user-attachments/assets/9e9dd461-56ca-4313-a6af-44dab00d2836)
 
-alpha
-gamma
-epsilon 
-은 Learning rate 관련 하이퍼 파라미터 입니다 
-적당한 강화 학습 예제에서 알파 값으로 0.4 를 썼길래 저도 0.4를 사용하였습니다. 
-gamma 값도 높게 0.99를 사용하길래 0.99를 사용했습니다. 
-엡실론 값은 state-action pair 갯수가 402개 이므로 exploration이 중요하다 생각해서 0.5로 설정하였습니다.
+alpha <br>
+gamma <br>
+epsilon <br>
+은 Learning rate 관련 하이퍼 파라미터 입니다 <br>
+적당한 강화 학습 예제에서 알파 값으로 0.4 를 썼길래 저도 0.4를 사용하였습니다. <br>
+gamma 값도 높게 0.99를 사용하길래 0.99를 사용했습니다. <br>
+엡실론 값은 state-action pair 갯수가 402개 이므로 exploration이 중요하다 생각해서 0.5로 설정하였습니다. <br>
+
+![image](https://github.com/user-attachments/assets/6d70c214-7cfb-4cc1-a8d9-07490322d23f)
+
+
+그 외에 total reward 계산을 위한 변수가 존재합니다. <br>
+
