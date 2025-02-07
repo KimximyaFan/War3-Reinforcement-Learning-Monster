@@ -178,6 +178,8 @@ final state인 MONSTER_WIN이랑  USER_WIN 상태를 더해서 <br>
 하지만 시행횟수가 높아질 수록, 사람에 대한 환경변수는 결국 평균적인 실력의 사람으로 수렴하게 될 것입니다. <br>
 그래서 해당 강화학습은 평균적인 실력의 사람에 대한 학습이라고 볼 수 있습니다. <br>
 
+<br><br><br>
+
 ## 사용한 강화학습 알고리즘
 
 ![image](https://github.com/user-attachments/assets/32e33ace-d630-45b8-9c3b-0c246906cf5d)
@@ -196,3 +198,50 @@ TD(Temporal Difference) <br>
 현 문제는 전투가 빠르게 끝날 수도 혹은 오래 걸릴 수도 있습니다. <br>
 그래서 구현도 용이하고 computation 압력도 낮은 TD의 on policy 알고리즘인 SARSA를 채택하게 되었습니다. <br>
 
+<br><br><br>
+
+## 강화학습 관련 코드에 대한 설명
+
+![image](https://github.com/user-attachments/assets/c1955908-51dd-45d8-8654-3bb18487927f)
+
+해당 게임은 유즈맵이라는 형태로 존재하며, 유즈맵은 워크래프트3 에서 플레이 할 수 있습니다. <br>
+게임 커뮤니티에 해당 유즈맵을 올렸고, 불특정 다수가 유즈맵을 다운받아 플레이하면서, 학습에대한 데이터를 제공해주었습니다. <br>
+사람들은 각 로컬에서 플레이 하므로, 학습에 대한 Q table은 서버상에 존재하게 됩니다. <br>
+
+![image](https://github.com/user-attachments/assets/fb7858db-58fb-4a22-bbe0-1e162cccd773)
+
+유저들이 게임을 플레이할 때마다, <br>
+서버에서 스트링 형태의 Q table 정보를 Load 해오고, 해당 스트링으로 게임 내에서 사용 할 수 있는 Q table로 빌드 합니다. <br>
+게임을 플레이하면서 Q table이 계속 업데이트 되며, 에피소드가 끝나면 <br>
+다시 서버로 해당 Q table을 스트링 형태로 바꾼 후 서버에 올리게 됩니다. <br>
+
+![image](https://github.com/user-attachments/assets/d2741c03-3963-424f-99ca-dfdc5317f58d)
+
+그리고 total reward 도 계산해서 서버에 로그를 남깁니다.<br>
+
+<br><br><br>
+
+![image](https://github.com/user-attachments/assets/32a827e9-789e-4c04-b73a-2d10c4ed2e00)
+
+해쉬테이블을 사용해서 Q_Table을 만들었습니다. 
+Key 값으로 state와 action이 존재합니다.
+
+![image](https://github.com/user-attachments/assets/eb384b2b-42d2-4670-896e-41b76727f9ed)
+
+state는 42개의 정수 값 0~41을 이용하였고
+
+![image](https://github.com/user-attachments/assets/c253ba09-6700-42a1-8206-8faf176436b0)
+
+action은 10개의 정수 값 0~9를 이용하였습니다.
+
+<br><br><br>
+
+![image](https://github.com/user-attachments/assets/9e9dd461-56ca-4313-a6af-44dab00d2836)
+
+alpha
+gamma
+epsilon 
+은 Learning rate 관련 하이퍼 파라미터 입니다 
+적당한 강화 학습 예제에서 알파 값으로 0.4 를 썼길래 저도 0.4를 사용하였습니다. 
+gamma 값도 높게 0.99를 사용하길래 0.99를 사용했습니다. 
+엡실론 값은 state-action pair 갯수가 402개 이므로 exploration이 중요하다 생각해서 0.5로 설정하였습니다.
