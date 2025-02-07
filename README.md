@@ -232,7 +232,7 @@ Key 값으로 state와 action이 존재합니다.<br>
 
 거리 상태는 0~9 까지 존재하고, 타격 상태에 기반해서 padding 의 값이 바뀝니다. <br>
 
-final state 40, 41 을 더하면, <br>
+final state 를 의미하는 MONSTER_WIN, USER_WIN 까지, <br>
 
 최종적으로 state는 42개의 정수 값 0~41을 이용하게 됩니다 <br>
 
