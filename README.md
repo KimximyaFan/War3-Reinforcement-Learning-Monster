@@ -267,3 +267,101 @@ gamma 값도 높게 0.99를 사용하길래 0.99를 사용했습니다. <br>
 
 그 외에 total reward 계산을 위한 변수가 존재합니다. <br>
 
+<br><br><br>
+
+![image](https://github.com/user-attachments/assets/f161a566-71d8-4793-abd3-fcb0f1a6108f)
+
+위그림은 Q_Table 관련 코드입니다.<br>
+
+Get_Q_Value() 함수는 인자로 state와 action값을 받으며, <br>
+해당 state-action pair의 Q value 값을 리턴해줍니다. <br>
+
+Set_Q_Value()는 인자로 state, action, value를 받으며, <br>
+해당 state-action pair의 Q value 값을 수정해주는 함수입니다. <br>
+
+Get_Max_Action() 함수는 인자로 state를 받으며, <br>
+해당 state에서 Q value 값이 제일 높은 액션을 리턴해줍니다. <br>
+(제일 큰 Q value를 쓴다는 건, 확률적으로 좋은 reward 받을 확률이 높다는 뜻입니다) <br>
+
+<br><br><br>
+
+![image](https://github.com/user-attachments/assets/59e7e081-51ef-4598-a86b-59b01bca83c4)
+
+위 코드는 epsilon-greedy policy 에 기반한 액션 선택 함수입니다. <br>
+
+Epsilon-Greedy는 강화 학습에서 사용되는 탐험(Exploration)과 활용(Exploitation)을 조절하는 전략입니다. <br>
+이 방법은 에이전트가 대부분의 경우 현재 가장 좋은 행동을 선택하되(활용), 일정 확률(ε)로 무작위 행동을 선택(탐험)합니다.<br>
+
+만약 final state라면 Q-table에서 state-action pair의 action 값은 0밖에 없으므로, 0을 리턴해줍니다. <br>
+그 외, 보통의 경우 엡실론 그리디 과정을 거칩니다. <br>
+
+랜덤 실수값이 epsilon 보다 작은 경우, 가능한 액션들 중에서 균일 확률로 액션을 랜덤 선택합니다. <br>
+랜덤 실수값이 epsilon 확률보다 크다면, Get_Max_Action() 함수를 통해 greedy 하게 액션을 선택합니다.<br>
+
+<br><br><br>
+
+![image](https://github.com/user-attachments/assets/f86b292e-5484-4df8-91c9-2dd6d8d476d0)
+
+위 코드는 리워드를 주는 함수에 대한 코드입니다. <br>
+
+기본적으로 final state인지 체크를 합니다. <br>
+final state는 몬스터나 유저 둘중 하나 이상 죽었고, 게임이 종료되야함을 의미합니다.<br>
+게임 중, 몬스터가 죽었다면 몬스터는 리워드를 -10 받게 됩니다. <br>
+유저가 죽었다면 리워드를 +10 받게 됩니다. <br>
+만약 동시에 둘 다 죽으면 유저 승리 판정으로 인해 리워드를 -10 받게 됩니다.<br>
+
+만약 final state가 아니라면 타격 상태에 기반해서 리워드를 줍니다. <br>
+유저 몬스터 둘 다 타격 받지 않으면 리워드는 0입니다. <br>
+몬스터만 타격 받으면 -1을 받습니다. <br>
+유저만 타격 받으면 +1을 받습니다. <br>
+만약 둘 다 타격 받았다면, <br>
+체력과 데미지는 몬스터가 더 높으므로, 그런 상태는 몬스터쪽이 더 유리합니다. <br>
+그러므로 리워드를 0.5로 책정하였습니다.<br>
+
+<br><br><br>
+
+![image](https://github.com/user-attachments/assets/9f8a0e14-8db7-4bd8-94e1-fa4510ee4bf5)
+
+위 코드는 강화학습 관련 핵심 코드 입니다. 
+
+Q_Table을 업데이트 해주는 함수입니다. 
+Get_reward를 통해 리워드를 받아오고,
+그림에는 표현되지 않았지만,
+Get_State() 함수에서 current_state, current_action 그리고 before_state, before_action 값이 계속 갱신됩니다
+
+![image](https://github.com/user-attachments/assets/52ff9f94-8bb9-4ac3-b6c0-8bca7725db02)
+
+해당 코드가 SARSA 알고리즘 수식을 나타냅니다
+
+![image](https://github.com/user-attachments/assets/3f940792-b572-4a72-9f45-87134251e392)
+
+그런데 짚고 넘어가야할 점이 있습니다. 
+업데이트는 게임 내 실시간으로 이루어집니다. 
+해당 강화학습 환경은, 강한 실시간성을 띄고 있기 때문에, 
+보통의 TD 알고리즘에서 이루어지는, 상태  S(t)  에서 바로 Q Value를 업데이트하는게 불가능합니다. 
+물리적으로 S(t+1) 이 미래에 있기 때문입니다. 
+유저의 행동은 예측 불가능하고 몬스터의 액션 딜레이가 끝나야 다음  state를 알 수 있습니다.  
+그래서 업데이트는 before_state 기준으로 진행됩니다. 
+Q table 업데이트 수식은 S(t-1) ← S(t-1) + α[ R + r*S(t) – S(t-1)] 로 하게 됩니다. 
+
+![image](https://github.com/user-attachments/assets/ceb9f18f-87ac-46f8-a3cc-b6070ddd15f1)
+
+Update_Process() 함수의 첫부분에 (before_state == -1) if 문 판별이 있는데 이는 initial state를 의미하고, 
+첫 state에서는 Q_Table 업데이트가 불가능하므로 그냥 바로 return을 하게 됩니다. 
+
+![image](https://github.com/user-attachments/assets/5fa41124-0d81-40d6-8f09-7f6ab9242e5b)
+
+![image](https://github.com/user-attachments/assets/a816753f-142f-48b5-96db-c6c594e5edd9)
+
+마지막으로 Is_Final_State() == true if 문 판별이 존재하는데, 만약 final state라면 그 다음 state를 진행 할 수 없으므로, 
+final 이전 state에 대한 Q_Table 업데이트와 동시에 현재 final state에 대한 Q_Table 업데이트도 진행합니다.
+
+<br><br><br>
+
+![image](https://github.com/user-attachments/assets/74dd2f8b-ad2f-46da-8216-e46b0a6c4c7d)
+
+최종적으로, 위 그림의 빨간색 테두리 박스 부분이 강화학습 관련 함수들입니다.
+
+<br><br><br>
+
+## 결과, 평가 그리고 고찰
