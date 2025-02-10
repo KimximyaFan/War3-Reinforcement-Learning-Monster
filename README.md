@@ -365,3 +365,14 @@ final 이전 state에 대한 Q_Table 업데이트와 동시에 현재 final stat
 <br><br><br>
 
 ## 결과, 평가 그리고 고찰
+
+### 학습 초기, 제로베이스
+[![Video Label](http://img.youtube.com/vi/4zzFT4OZ5Z8/0.jpg)](https://youtu.be/4zzFT4OZ5Z8)
+(이미지를 클릭하시면 플레이 영상이 있는 유튜브 링크로 넘어갑니다)
+
+<br>
+
+### 학습 400회, optimal policy
+[![Video Label](http://img.youtube.com/vi/UTd_NhSVbXE/0.jpg)](https://youtu.be/UTd_NhSVbXE)
+(이미지를 클릭하시면 플레이 영상이 있는 유튜브 링크로 넘어갑니다)
+
