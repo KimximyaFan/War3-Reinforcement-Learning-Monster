@@ -322,57 +322,150 @@ final state는 몬스터나 유저 둘중 하나 이상 죽었고, 게임이 종
 
 ![image](https://github.com/user-attachments/assets/9f8a0e14-8db7-4bd8-94e1-fa4510ee4bf5)
 
-위 코드는 강화학습 관련 핵심 코드 입니다. 
+위 코드는 강화학습 관련 핵심 코드 입니다. <br>
 
-Q_Table을 업데이트 해주는 함수입니다. 
-Get_reward를 통해 리워드를 받아오고,
-그림에는 표현되지 않았지만,
-Get_State() 함수에서 current_state, current_action 그리고 before_state, before_action 값이 계속 갱신됩니다
+Q_Table을 업데이트 해주는 함수입니다. <br>
+Get_reward를 통해 리워드를 받아오고,<br>
+그림에는 표현되지 않았지만,<br>
+Get_State() 함수에서 current_state, current_action 그리고 before_state, before_action 값이 계속 갱신됩니다. <br>
 
 ![image](https://github.com/user-attachments/assets/52ff9f94-8bb9-4ac3-b6c0-8bca7725db02)
 
-해당 코드가 SARSA 알고리즘 수식을 나타냅니다
+해당 코드가 SARSA 알고리즘 수식을 나타냅니다 <br>
 
 ![image](https://github.com/user-attachments/assets/3f940792-b572-4a72-9f45-87134251e392)
 
-그런데 짚고 넘어가야할 점이 있습니다. 
-업데이트는 게임 내 실시간으로 이루어집니다. 
-해당 강화학습 환경은, 강한 실시간성을 띄고 있기 때문에, 
-보통의 TD 알고리즘에서 이루어지는, 상태  S(t)  에서 바로 Q Value를 업데이트하는게 불가능합니다. 
-물리적으로 S(t+1) 이 미래에 있기 때문입니다. 
-유저의 행동은 예측 불가능하고 몬스터의 액션 딜레이가 끝나야 다음  state를 알 수 있습니다.  
-그래서 업데이트는 before_state 기준으로 진행됩니다. 
-Q table 업데이트 수식은 S(t-1) ← S(t-1) + α[ R + r*S(t) – S(t-1)] 로 하게 됩니다. 
+그런데 짚고 넘어가야할 점이 있습니다. <br>
+업데이트는 게임 내 실시간으로 이루어집니다. <br>
+해당 강화학습 환경은, 강한 실시간성을 띄고 있기 때문에, <br>
+보통의 TD 알고리즘에서 이루어지는, 상태  S(t)  에서 바로 Q Value를 업데이트하는게 불가능합니다. <br>
+물리적으로 S(t+1) 이 미래에 있기 때문입니다. <br>
+유저의 행동은 예측 불가능하고 몬스터의 액션 딜레이가 끝나야 다음  state를 알 수 있습니다.  <br>
+그래서 업데이트는 before_state 기준으로 진행됩니다. <br>
+Q table 업데이트 수식은 S(t-1) ← S(t-1) + α[ R + r*S(t) – S(t-1)] 로 하게 됩니다. <br>
 
 ![image](https://github.com/user-attachments/assets/ceb9f18f-87ac-46f8-a3cc-b6070ddd15f1)
 
-Update_Process() 함수의 첫부분에 (before_state == -1) if 문 판별이 있는데 이는 initial state를 의미하고, 
-첫 state에서는 Q_Table 업데이트가 불가능하므로 그냥 바로 return을 하게 됩니다. 
+Update_Process() 함수의 첫부분에 (before_state == -1) if 문 판별이 있는데 이는 initial state를 의미하고, <br>
+첫 state에서는 Q_Table 업데이트가 불가능하므로 그냥 바로 return을 하게 됩니다. <br>
 
 ![image](https://github.com/user-attachments/assets/5fa41124-0d81-40d6-8f09-7f6ab9242e5b)
 
 ![image](https://github.com/user-attachments/assets/a816753f-142f-48b5-96db-c6c594e5edd9)
 
-마지막으로 Is_Final_State() == true if 문 판별이 존재하는데, 만약 final state라면 그 다음 state를 진행 할 수 없으므로, 
-final 이전 state에 대한 Q_Table 업데이트와 동시에 현재 final state에 대한 Q_Table 업데이트도 진행합니다.
+마지막으로 Is_Final_State() == true if 문 판별이 존재하는데, 만약 final state라면 그 다음 state를 진행 할 수 없으므로, <br>
+final 이전 state에 대한 Q_Table 업데이트와 동시에 현재 final state에 대한 Q_Table 업데이트도 진행합니다.<br>
 
 <br><br><br>
 
 ![image](https://github.com/user-attachments/assets/74dd2f8b-ad2f-46da-8216-e46b0a6c4c7d)
 
-최종적으로, 위 그림의 빨간색 테두리 박스 부분이 강화학습 관련 함수들입니다.
+최종적으로, 위 그림의 빨간색 테두리 박스 부분이 강화학습 관련 함수들입니다. <br>
 
 <br><br><br>
 
 ## 결과, 평가 그리고 고찰
 
+<br>
+
+![image](https://github.com/user-attachments/assets/ff442d14-5743-4844-b076-b8134bf27b74)
+
+한 에피소드가 끝나면 total_reward를 서버에 로그 형식으로 남겼습니다. <br>
+총 408번의 episode에 대해 학습 했습니다.<br>
+
+![image](https://github.com/user-attachments/assets/e660a7df-0bb7-4a79-9156-2b18fc81381b)
+
+Data frame은 위 그림과 같이 나오며, 행의 번호가 episode가 진행된 순서입니다.<br>
+
+<br>
+
+![image](https://github.com/user-attachments/assets/4df74cb7-0915-4219-b69d-607e8e4eeff3)
+
+해당 total reward들을 그래프로 그려보면 위 그림과 같습니다. <br>
+
+결과가 그리 좋지는 않습니다. <br>
+
+다양한 문제점이 존재하지만 대표적으로 꼽자면 <br>
+
+
+문제점 1 - 몬스터 난이도가 너무 높음 <br>
+
+: 학습 초기상태에서도 사람들이 뭐 해보지도 못하고 죽어 나갔습니다 <br>
+이는 학습 초기부터 높은 total reward를 기록하게 되었습니다 <br>
+
+
+문제점 2 - 평균적인 사람들의 게임 수행능력이 생각보다 낮았음 <br>
+
+: 몬스터가 주로 낮은 수행능력, 저숙련도 대상으로 학습되었습니다 <br>
+이는 정적이고 단조로운 액션 정책으로 수렴되었습니다 <br>
+
+
+문제점 3 - 리워드 설정을 잘못함
+
+: 몬스터는 리워드를 극대와 하는 방향으로 학습하기에, 리워드만 얻으면 장땡입니다.  <br>
+몬스터는 학습을 통해 리워드를 얻는 안정적인 액션을 추구하게됨을 깨달았고 <br>
+이는 정적이고 단조로운 액션 정책으로 수렴되었습니다 <br>
+
+![image](https://github.com/user-attachments/assets/e5458df8-699f-418e-b793-4c84131a387d)
+
+Linear Regression 적용해보면 추세 자체는 증가하는 방향이라 그래도 학습이 되고는 있다라고 말할 수는 있으나, <br>
+강화학습을 통해 역동적인 몬스터를 기대했었던 것과는 달리  <br>
+정적이고 단조로운 결과가 나타나서 이 부분은 의도하지 않은 결과가 되었습니다 <br>
+
+<br><br><br>
+
+![image](https://github.com/user-attachments/assets/9115922e-fbf2-40cf-8811-9603d4b4e46c)
+
+위 그림은 최종 408번의 학습 후 나온 Q table 데이터프레임 입니다. <br>
+해당 state에서 해당 action이 수치적으로 얼마나 좋은지를 나타내며, <br>
+수치가 높은 액션을 선택하면 확률적으로 더 높은 reward를 얻게 됩니다. <br>
+
+이걸로 optimal policy를 뽑아내면 다음과 같이 나옵니다 <br>
+
+![image](https://github.com/user-attachments/assets/a9cc5e06-3607-4b76-8f10-730b10413e24)
+
+​총 40개의 state에 대해서, 강화학습을 통해 얻어낸 optimal policy 입니다 <br>
+해당 상태일 때, optimal policy의 action을 수행하면 최적의 reward를 얻을 수 있다는 뜻입니다. <br>
+
 ### 학습 초기, 제로베이스
-[![Video Label](http://img.youtube.com/vi/4zzFT4OZ5Z8/0.jpg)](https://youtu.be/4zzFT4OZ5Z8)
+[![Video Label](http://img.youtube.com/vi/4zzFT4OZ5Z8/0.jpg)](https://youtu.be/4zzFT4OZ5Z8) <br>
 (이미지를 클릭하시면 플레이 영상이 있는 유튜브 링크로 넘어갑니다)
+
+백스텝 위주로 액션이 나오며, 전체적으로 쉽고 플레이 타임도 짧습니다. <br>
 
 <br>
 
 ### 학습 400회, optimal policy
-[![Video Label](http://img.youtube.com/vi/UTd_NhSVbXE/0.jpg)](https://youtu.be/UTd_NhSVbXE)
+[![Video Label](http://img.youtube.com/vi/UTd_NhSVbXE/0.jpg)](https://youtu.be/UTd_NhSVbXE) <br>
 (이미지를 클릭하시면 플레이 영상이 있는 유튜브 링크로 넘어갑니다)
 
+학습 후, 확실히 패턴이 까다로워졌으며, 플레이타임도 27초 늘어났습니다. <br>
+
+거리 가까우면 Fast Attack, <br>
+중거리에 있으면 주로 Center Attack 을 하는게 특징적입니다. <br>
+
+정적이고 단조로운 패턴의 몬스터가 되었는데, <br>
+이게 왜 이렇게 되었을까를 고찰해보면, <br>
+몬스터는 리워드를 극대화 하는 방향으로 학습하는거고,  <br>
+저 Center Attack이 범위도 넓고 넉백도 크고 그러니 리워드 얻기에는 안정적이고 좋은 액션이기 때문인 것 같습니다. <br>
+
+이게 단조롭기는 하나, <br>
+불특정 다수의 유저를 대상으로, 평균적인 실력의 유저를 대상으로 <br>
+통계적, 수학적으로 보면 <br>
+유저를 이기는, reward를 얻는 최적화된 방법이라는 것입니다. <br>
+
+저숙련도의 유저를 대상으로는 굉장히 효과적인 패턴이나 <br>
+잘하는 유저를 대상으로 할 때는 쉬운 패턴이 되어버렸습니다. <br>
+
+처음 강화학습 설계를 시작할 때는 막 이리저리 뛰어다니고 동적이고 다채로운 패턴을 구사하는 화려한 <br>
+몬스터가 나올줄 알았는데 그게 안되건 살짝 아쉬운 부분입니다. <br>
+
+<br><br><br>
+
+### 결론
+
+파이썬이 아닌, 다른 언어로 제가 직접 환경을 만들어서 강화학습을 시도해본 것은 처음입니다.  <br>
+total_reward의 경향성은 증가하는 방향이지만,  <br>
+몬스터의 난이도와 리워드 설정에 대해서 미숙한 부분이 있어서 제가 원하는 결과는 나타나지 않았습니다.  <br>
+하지만 해당 경험을 통해서 파이썬 라이브러리나, Open AI Gym 같은 주어진 라이브러리가 없더라도  <br>
+제가 직접 만들 수 있다는 자신감을 가지고 앞으로 강화학습을 유용하게 사용할 수 있을 것 같습니다 <br>
